@@ -6,23 +6,23 @@
 
     var today = moment();
 
-
     function Calendar(selector) {
         this.el = document.querySelector(selector);
+        this.current = moment().weekday(1);
         this.current_week = moment().week();
         this.draw_calendar();
-        console.log(this);
     }
 
     Calendar.prototype.draw_calendar = function() {
         // Draw Header
         this.draw_header();
-        // Draw Week
 
+        // Draw Week
+        this.draw_week();
     }
 
     Calendar.prototype.draw_header = function() {
-        // Refer to Calendar Object with "self"
+        // Refer to Calendar Object with "self" when "this" refers to an event
         var self = this;
 
         if(!this.header) {
@@ -48,6 +48,39 @@
         }
 
         this.title.innerHTML = "Semaine " + this.current_week;
+    }
+
+    Calendar.prototype.draw_week = function() {
+        var self = this;
+
+        this.week = createElement('div', 'week');
+        this.el.appendChild(this.week);
+        this.back_fill();
+        this.forward_fill();
+    }
+
+    Calendar.prototype.back_fill = function() {
+        var clone = this.current.clone();
+        var first_day_of_week = clone.day();
+
+        clone.subtract('days', first_day_of_week);
+
+        for(var i = first_day_of_week; i > 0 ; i--) {
+            console.log(clone.add('days', 1));
+        }
+    }
+
+    Calendar.prototype.forward_fill = function() {
+        var clone = this.current.clone().add('weeks', 1);
+        var last_day_of_week = clone.day();
+
+        if(last_day_of_week === 6) { return; }
+
+        for(var i = last_day_of_week; i <= 7 ; i++) {
+            clone.add('days', 1);
+            console.log(clone.day());
+            console.log(moment().weekday(i));
+        }
     }
 
     // A function to create html elements
