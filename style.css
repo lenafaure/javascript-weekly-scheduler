@@ -116,6 +116,11 @@ a.today {
     padding: 15px;
 }
 
+.day-slot {
+    padding: 30px 0;
+    font-weight: bold;
+}
+
 .day-name {
     font-size: 9px;
     text-transform: uppercase;

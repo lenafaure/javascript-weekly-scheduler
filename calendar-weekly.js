@@ -126,7 +126,6 @@
                 element.appendChild(ts_span);
             });
         }
-
     }
 
     // A function to add a different class to "today"
