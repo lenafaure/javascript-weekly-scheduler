@@ -100,7 +100,7 @@
         var day_name = createElement('div', 'day-name', day.format('ddd'));
         var day_number = createElement('div', 'day-number', day.format('DD'));
         var day_month = createElement('div', 'day-month', day.format('MMM'));
-        var day_slot = createElement('div', 'day-slot', 'book this day')
+        var day_slot = createElement('div', 'day-slot', 'book this spot')
         day_wrapper.appendChild(day_name);
         day_wrapper.appendChild(day_number);
         day_wrapper.appendChild(day_month);
