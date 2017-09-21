@@ -31,12 +31,12 @@
 
             var right = createElement('div', 'right');
             right.addEventListener('click', function () {
-                self.nextWeek();
+                self.next_week();
             });
 
             var left = createElement('div', 'left');
             left.addEventListener('click', function () {
-                self.prevWeek();
+                self.prev_week();
             });
 
             // Append header elements to Calendar
@@ -52,11 +52,27 @@
     Calendar.prototype.draw_week = function() {
         var self = this;
 
-        this.week = createElement('div', 'week');
-        this.el.appendChild(this.week);
-        this.back_fill();
-        this.current_week();
-        this.forward_fill();
+        if(this.week){
+            this.old_week = this.week;
+            this.old_week.className = 'week out ' + (self.next ? 'next' : 'prev');
+            this.old_week.addEventListener('webkitAnimationEnd', function() {
+                self.old_week.parentNode.removeChild(self.old_week);
+                self.week = createElement('div', 'week');
+                self.current_week();
+                self.el.appendChild(self.week);
+                window.setTimeout(function() {
+                    self.week.className = 'week in ' + (self.next ? 'next' : 'prev');
+                }, 16);
+            });
+        }
+        else {
+            this.week = createElement('div', 'week');
+            this.el.appendChild(this.week);
+            this.back_fill();
+            this.current_week();
+            this.forward_fill();
+            this.week.className = 'week current';
+        }
     }
 
     Calendar.prototype.back_fill = function() {
@@ -87,9 +103,20 @@
         while(clone.week() === this.current.week()) {
             clone.add('days', 1);
             this.draw_day(clone);
-            console.log(clone.day());
-            console.log(moment().weekday(clone.day()));
+            console.log(clone.format('MM/DD/YYYY'));
         }
+    }
+
+    Calendar.prototype.next_week = function() {
+        this.current.add('weeks', 1);
+        this.next = true;
+        this.draw_calendar();
+    }
+
+    Calendar.prototype.prev_week = function() {
+        this.current.subtract('weeks', 1);
+        this.next = false;
+        this.draw_calendar();
     }
 
     Calendar.prototype.draw_day = function(day) {
@@ -101,8 +128,6 @@
         day_wrapper.appendChild(day_number);
         this.week.appendChild(day_wrapper);
     }
-
-
 
     // A function to create html elements
     function createElement(tagName, className, innerText) {

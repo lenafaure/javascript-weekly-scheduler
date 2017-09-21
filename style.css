@@ -68,47 +68,43 @@ body {
     right: 20px;
 }
 
-.month {
+.week {
     /*overflow: hidden;*/
     opacity: 0;
+    display: flex;
 }
 
-.month.new {
+.week.current {
     -webkit-animation: fadeIn 1s ease-out;
     opacity: 1;
 }
 
-.month.in.next {
+.week.in.next {
     -webkit-animation: moveFromTopFadeMonth .4s ease-out;
     -moz-animation: moveFromTopFadeMonth .4s ease-out;
     animation: moveFromTopFadeMonth .4s ease-out;
     opacity: 1;
 }
 
-.month.out.next {
+.week.out.next {
     -webkit-animation: moveToTopFadeMonth .4s ease-in;
     -moz-animation: moveToTopFadeMonth .4s ease-in;
     animation: moveToTopFadeMonth .4s ease-in;
     opacity: 1;
 }
 
-.month.in.prev {
+.week.in.prev {
     -webkit-animation: moveFromBottomFadeMonth .4s ease-out;
     -moz-animation: moveFromBottomFadeMonth .4s ease-out;
     animation: moveFromBottomFadeMonth .4s ease-out;
     opacity: 1;
 }
 
-.month.out.prev {
+.week.out.prev {
     -webkit-animation: moveToBottomFadeMonth .4s ease-in;
     -moz-animation: moveToBottomFadeMonth .4s ease-in;
     animation: moveToBottomFadeMonth .4s ease-in;
     opacity: 1;
-}
-
-.week {
-    background: #4A4A4A;
-    display: flex;
 }
 
 .day {
