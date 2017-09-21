@@ -108,6 +108,7 @@ body {
 
 .week {
     background: #4A4A4A;
+    display: flex;
 }
 
 .day {
@@ -128,6 +129,10 @@ body {
 
 .day.today {
     color: rgba(156, 202, 235, 1);
+}
+
+.day-wrapper {
+    padding: 15px;
 }
 
 .day-name {

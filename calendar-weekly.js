@@ -8,8 +8,7 @@
 
     function Calendar(selector) {
         this.el = document.querySelector(selector);
-        this.current = moment().weekday(1);
-        this.current_week = moment().week();
+        this.current = moment().weekday(0);
         this.draw_calendar();
     }
 
@@ -47,7 +46,7 @@
             this.el.appendChild(this.header);
         }
 
-        this.title.innerHTML = "Semaine " + this.current_week;
+        this.title.innerHTML = "Semaine " + this.current.week();
     }
 
     Calendar.prototype.draw_week = function() {
@@ -56,6 +55,7 @@
         this.week = createElement('div', 'week');
         this.el.appendChild(this.week);
         this.back_fill();
+        this.current_week();
         this.forward_fill();
     }
 
@@ -66,7 +66,7 @@
         clone.subtract('days', first_day_of_week);
 
         for(var i = first_day_of_week; i > 0 ; i--) {
-            console.log(clone.add('days', 1));
+            clone.add('days', 1);
         }
     }
 
@@ -78,10 +78,31 @@
 
         for(var i = last_day_of_week; i <= 7 ; i++) {
             clone.add('days', 1);
-            console.log(clone.day());
-            console.log(moment().weekday(i));
         }
     }
+
+    Calendar.prototype.current_week = function() {
+        var clone = this.current.clone();
+
+        while(clone.week() === this.current.week()) {
+            clone.add('days', 1);
+            this.draw_day(clone);
+            console.log(clone.day());
+            console.log(moment().weekday(clone.day()));
+        }
+    }
+
+    Calendar.prototype.draw_day = function(day) {
+        var day_wrapper = createElement('div', 'day-wrapper');
+        var day_name = createElement('div', 'day-name', day.format('ddd'));
+        var day_number = createElement('div', 'day-number', day.format('DD'));
+
+        day_wrapper.appendChild(day_name);
+        day_wrapper.appendChild(day_number);
+        this.week.appendChild(day_wrapper);
+    }
+
+
 
     // A function to create html elements
     function createElement(tagName, className, innerText) {
