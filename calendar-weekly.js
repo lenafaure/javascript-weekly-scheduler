@@ -68,32 +68,8 @@
         else {
             this.week = createElement('div', 'week');
             this.el.appendChild(this.week);
-            this.back_fill();
             this.current_week();
-            this.forward_fill();
             this.week.className = 'week current';
-        }
-    }
-
-    Calendar.prototype.back_fill = function() {
-        var clone = this.current.clone();
-        var first_day_of_week = clone.day();
-
-        clone.subtract('days', first_day_of_week);
-
-        for(var i = first_day_of_week; i > 0 ; i--) {
-            clone.add('days', 1);
-        }
-    }
-
-    Calendar.prototype.forward_fill = function() {
-        var clone = this.current.clone().add('weeks', 1);
-        var last_day_of_week = clone.day();
-
-        if(last_day_of_week === 6) { return; }
-
-        for(var i = last_day_of_week; i <= 7 ; i++) {
-            clone.add('days', 1);
         }
     }
 
@@ -120,13 +96,25 @@
     }
 
     Calendar.prototype.draw_day = function(day) {
-        var day_wrapper = createElement('div', 'day-wrapper');
+        var day_wrapper = createElement('div', this.get_day_class(day));
         var day_name = createElement('div', 'day-name', day.format('ddd'));
         var day_number = createElement('div', 'day-number', day.format('DD'));
-
         day_wrapper.appendChild(day_name);
         day_wrapper.appendChild(day_number);
         this.week.appendChild(day_wrapper);
+    }
+
+    // A function to add a different class to "today"
+    Calendar.prototype.get_day_class = function(day) {
+        classes = ['day'];
+
+        if(day.week() !== this.current.week()) {
+            classes.push('other');
+        }
+        else if(today.isSame(day, 'day')) {
+            classes.push('today');
+        }
+        return classes.join(' ');
     }
 
     // A function to create html elements
