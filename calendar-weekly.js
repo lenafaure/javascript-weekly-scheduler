@@ -99,8 +99,12 @@
         var day_wrapper = createElement('div', this.get_day_class(day));
         var day_name = createElement('div', 'day-name', day.format('ddd'));
         var day_number = createElement('div', 'day-number', day.format('DD'));
+        var day_month = createElement('div', 'day-month', day.format('MMM'));
+        var day_slot = createElement('div', 'day-slot', 'book this day')
         day_wrapper.appendChild(day_name);
         day_wrapper.appendChild(day_number);
+        day_wrapper.appendChild(day_month);
+        day_wrapper.appendChild(day_slot);
         this.week.appendChild(day_wrapper);
     }
 
