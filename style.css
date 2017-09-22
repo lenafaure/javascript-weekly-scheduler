@@ -93,13 +93,16 @@ a.today {
 }
 
 .day {
-    display: inline-block;
-    padding: 10px;
+    padding: 10px 0;
     text-align: center;
     vertical-align: top;
     cursor: pointer;
     position: relative;
     z-index: 100;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+    border: 1px solid lightgrey;
 }
 
 .day.other {
@@ -154,7 +157,7 @@ a.today {
 .time-slot {
     margin: 20px 0;
     padding: 15px;
-    background-color: lightgray;
+    background-color: #eee;
 }
 
 .selected {
@@ -384,6 +387,11 @@ a.today {
 @media (max-width: 640px) {
     .week {
         flex-direction: column;
+    }
+
+    .day-slot {
+        padding: 0;
+        font-weight: bold;
     }
 
 }

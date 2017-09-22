@@ -123,15 +123,15 @@
             return element.weekday == day.day();
         });
 
+        console.log(today_time_slot);
         if(today_time_slot) {
             today_time_slot.slots.forEach(function(ts) {
-                var ts_span = createElement('div', 'time-slot',  ts);
+                var ts_span = createElement('div', 'time-slot', ts);
                 element.appendChild(ts_span);
 
-                ts_span.addEventListener('click', function() {
-                    self.select_time_slot(this);
+                ts_span.addEventListener('click', function () {
+                    self.select_time_slot(this, day);
                 });
-
             });
         }
     }
@@ -149,13 +149,16 @@
         return classes.join(' ');
     }
 
-    Calendar.prototype.select_time_slot = function(element) {
+    Calendar.prototype.select_time_slot = function(element, day) {
+        var selection = [];
         if(element.className.includes('selected')) {
             element.className = "time-slot";
         }
         else {
             element.className = "time-slot selected";
+            selection.push(day);
         }
+        console.log(selection);
     }
 
     // A function to create html elements
@@ -179,7 +182,7 @@
         {   weekday: 1,
             slots:
                 [
-                    "Interclasse du midi",
+                    "Interclasse",
                     "Goûter / Etude"
                 ]
         },
@@ -187,7 +190,7 @@
             weekday: 2,
             slots:
                 [
-                    "Interclasse du midi",
+                    "Interclasse",
                     "TAP",
                     "Goûter / Etude"
                 ]
@@ -203,7 +206,7 @@
         {   weekday: 4,
             slots:
                 [
-                    "Interclasse du midi",
+                    "Interclasse",
                     "Goûter / Etude"
                 ]
         },
@@ -211,7 +214,7 @@
             weekday: 5,
             slots:
                 [
-                    "Interclasse du midi",
+                    "Interclasse",
                     "TAP",
                     "Goûter / Etude"
                 ]
