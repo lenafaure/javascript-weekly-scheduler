@@ -3,7 +3,6 @@
 }
 
 body {
-    overflow: hidden;
     font-family: 'HelveticaNeue-UltraLight', 'Helvetica Neue UltraLight', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     font-weight: 100;
     -webkit-touch-callout: none;
@@ -25,8 +24,6 @@ a.today {
     -moz-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     margin: 0 auto;
-    height: 570px;
-    overflow: hidden;
 }
 
 .header {
@@ -383,3 +380,12 @@ a.today {
 @keyframes fadeOutShink  {
     to { opacity: 0; padding: 0px; height: 0px; }
 }
+
+@media (max-width: 640px) {
+    .week {
+        flex-direction: column;
+    }
+
+}
+
+
