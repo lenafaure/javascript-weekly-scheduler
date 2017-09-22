@@ -102,7 +102,7 @@
             var day_name = createElement('div', 'day-name', day.locale('fr').format('ddd'));
             var day_number = createElement('div', 'day-number', day.format('DD'));
             var day_month = createElement('div', 'day-month', day.locale('fr').format('MMM'));
-            var day_slot = createElement('div', 'day-slot');
+            var day_slot = createElement('div', 'day-slot', '', 'data-date', day);
 
             if(day.day() <= 5) {
                 this.draw_time_slot(day, day_slot);
@@ -126,7 +126,7 @@
         console.log(today_time_slot);
         if(today_time_slot) {
             today_time_slot.slots.forEach(function(ts) {
-                var ts_span = createElement('div', 'time-slot', ts);
+                var ts_span = createElement('div', 'time-slot', ts, 'data-event', ts);
                 element.appendChild(ts_span);
 
                 ts_span.addEventListener('click', function () {
@@ -162,13 +162,16 @@
     }
 
     // A function to create html elements
-    function createElement(tagName, className, innerText) {
+    function createElement(tagName, className, innerText, dataAttributeName, dataAttributeValue) {
         var html_element = document.createElement(tagName);
         if(className) {
             html_element.className = className;
         }
         if(innerText) {
-            html_element.innderText = html_element.textContent = innerText;
+            html_element.innerText = html_element.textContent = innerText;
+        }
+        if(dataAttributeName && dataAttributeValue) {
+            html_element.setAttribute(dataAttributeName, dataAttributeValue);
         }
         return html_element;
     }
