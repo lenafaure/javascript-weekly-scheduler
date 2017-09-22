@@ -179,7 +179,7 @@
             weekday: 3,
             slots:
                 [
-                    "Interclase",
+                    "Interclasse",
                     "Centre de Loisirs"
                 ]
         },
