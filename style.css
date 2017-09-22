@@ -160,7 +160,11 @@ a.today {
     background-color: #eee;
 }
 
-.selected {
+.time-slot:hover {
+    background-color: lightgreen;
+}
+
+.selected, .selected:hover {
     background-color: greenyellow;
 }
 
