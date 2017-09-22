@@ -186,7 +186,7 @@
         {   weekday: 4,
             slots:
                 [
-                    "Interclase du midi",
+                    "Interclasse du midi",
                     "Goûter / Etude"
                 ]
         },
