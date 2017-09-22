@@ -157,7 +157,11 @@ a.today {
 .time-slot {
     margin: 20px 0;
     padding: 15px;
-    background-color: aquamarine;
+    background-color: lightgray;
+}
+
+.selected {
+    background-color: greenyellow;
 }
 
 .blue { background: rgba(156, 202, 235, 1); }

@@ -96,6 +96,7 @@
     }
 
     Calendar.prototype.draw_day = function(day) {
+
         if (!this.get_day_class(day).includes('other')) {
             var day_wrapper = createElement('div', this.get_day_class(day));
             var day_name = createElement('div', 'day-name', day.locale('fr').format('ddd'));
@@ -111,10 +112,12 @@
             day_wrapper.appendChild(day_month);
             day_wrapper.appendChild(day_slot);
             this.week.appendChild(day_wrapper);
+
         }
     }
 
     Calendar.prototype.draw_time_slot = function(day, element) {
+        var self = this;
 
         var today_time_slot = this.time_slots.find(function(element) {
             return element.weekday == day.day();
@@ -124,6 +127,11 @@
             today_time_slot.slots.forEach(function(ts) {
                 var ts_span = createElement('div', 'time-slot',  ts);
                 element.appendChild(ts_span);
+
+                ts_span.addEventListener('click', function() {
+                    self.select_time_slot(this);
+                });
+
             });
         }
     }
@@ -139,6 +147,15 @@
             classes.push('today');
         }
         return classes.join(' ');
+    }
+
+    Calendar.prototype.select_time_slot = function(element) {
+        if(element.className.includes('selected')) {
+            element.className = "time-slot";
+        }
+        else {
+            element.className = "time-slot selected";
+        }
     }
 
     // A function to create html elements
