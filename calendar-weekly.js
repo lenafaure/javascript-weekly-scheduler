@@ -162,7 +162,7 @@
         {   weekday: 1,
             slots:
                 [
-                    "Interclase du midi",
+                    "Interclasse du midi",
                     "Goûter / Etude"
                 ]
         },
@@ -170,7 +170,7 @@
             weekday: 2,
             slots:
                 [
-                    "Interclase du midi",
+                    "Interclasse du midi",
                     "TAP",
                     "Goûter / Etude"
                 ]
@@ -194,7 +194,7 @@
             weekday: 5,
             slots:
                 [
-                    "Interclase du midi",
+                    "Interclasse du midi",
                     "TAP",
                     "Goûter / Etude"
                 ]
