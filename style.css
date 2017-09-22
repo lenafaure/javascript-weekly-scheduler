@@ -97,7 +97,6 @@ a.today {
 
 .day {
     display: inline-block;
-    width: 60px;
     padding: 10px;
     text-align: center;
     vertical-align: top;
@@ -148,6 +147,12 @@ a.today {
     height: 5px;
     line-height: 5px;
     margin: 0 1px;
+}
+
+.time-slot {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: aquamarine;
 }
 
 .blue { background: rgba(156, 202, 235, 1); }

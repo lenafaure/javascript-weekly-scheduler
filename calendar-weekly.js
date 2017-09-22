@@ -6,9 +6,10 @@
 
     var today = moment();
 
-    function Calendar(selector) {
+    function Calendar(selector, time_slots) {
         this.el = document.querySelector(selector);
-        this.current = moment().weekday(0);
+        this.time_slots = time_slots;
+        this.current = moment().startOf('week');
         this.draw_calendar();
     }
 
@@ -79,7 +80,6 @@
         while(clone.week() === this.current.week()) {
             clone.add('days', 1);
             this.draw_day(clone);
-            console.log(clone.format('MM/DD/YYYY'));
         }
     }
 
@@ -96,16 +96,37 @@
     }
 
     Calendar.prototype.draw_day = function(day) {
-        var day_wrapper = createElement('div', this.get_day_class(day));
-        var day_name = createElement('div', 'day-name', day.format('ddd'));
-        var day_number = createElement('div', 'day-number', day.format('DD'));
-        var day_month = createElement('div', 'day-month', day.format('MMM'));
-        var day_slot = createElement('div', 'day-slot', 'book this day')
-        day_wrapper.appendChild(day_name);
-        day_wrapper.appendChild(day_number);
-        day_wrapper.appendChild(day_month);
-        day_wrapper.appendChild(day_slot);
-        this.week.appendChild(day_wrapper);
+        if (!this.get_day_class(day).includes('other')) {
+            var day_wrapper = createElement('div', this.get_day_class(day));
+            var day_name = createElement('div', 'day-name', day.locale('fr').format('ddd'));
+            var day_number = createElement('div', 'day-number', day.format('DD'));
+            var day_month = createElement('div', 'day-month', day.locale('fr').format('MMM'));
+            var day_slot = createElement('div', 'day-slot');
+
+            if(day.day() <= 5) {
+                this.draw_time_slot(day, day_slot);
+            }
+            day_wrapper.appendChild(day_name);
+            day_wrapper.appendChild(day_number);
+            day_wrapper.appendChild(day_month);
+            day_wrapper.appendChild(day_slot);
+            this.week.appendChild(day_wrapper);
+        }
+    }
+
+    Calendar.prototype.draw_time_slot = function(day, element) {
+
+        var today_time_slot = this.time_slots.find(function(element) {
+            return element.weekday == day.day();
+        });
+
+        if(today_time_slot) {
+            today_time_slot.slots.forEach(function(ts) {
+                var ts_span = createElement('div', 'time-slot',  ts);
+                element.appendChild(ts_span);
+            });
+        }
+
     }
 
     // A function to add a different class to "today"
@@ -133,6 +154,54 @@
         return html_element;
     }
 
-    var calendar = new Calendar('#calendar');
+    window.Calendar = Calendar;
+
+}();
+
+!function() {
+    var time_slots = [
+        {   weekday: 1,
+            slots:
+                [
+                    "Interclase du midi",
+                    "Goûter / Etude"
+                ]
+        },
+        {
+            weekday: 2,
+            slots:
+                [
+                    "Interclase du midi",
+                    "TAP",
+                    "Goûter / Etude"
+                ]
+        },
+        {
+            weekday: 3,
+            slots:
+                [
+                    "Interclase",
+                    "Centre de Loisirs"
+                ]
+        },
+        {   weekday: 4,
+            slots:
+                [
+                    "Interclase du midi",
+                    "Goûter / Etude"
+                ]
+        },
+        {
+            weekday: 5,
+            slots:
+                [
+                    "Interclase du midi",
+                    "TAP",
+                    "Goûter / Etude"
+                ]
+        }
+    ];
+
+    var calendar = new Calendar('#calendar', time_slots);
 
 }();
