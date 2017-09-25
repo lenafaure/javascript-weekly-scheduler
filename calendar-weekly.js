@@ -10,6 +10,7 @@
         this.el = document.querySelector(selector);
         this.time_slots = time_slots;
         this.current = moment().startOf('week');
+        this.selection = [];
         this.draw_calendar();
     }
 
@@ -149,16 +150,23 @@
         return classes.join(' ');
     }
 
-    Calendar.prototype.select_time_slot = function(element, day) {
-        var selection = [];
+    Calendar.prototype.select_time_slot = function(element) {
+
         if(element.className.includes('selected')) {
             element.className = "time-slot";
+
+            var element_index = this.selection.findIndex(function(item){
+               return JSON.stringify(item) == JSON.stringify([element.parentNode.getAttribute('data-date'),element.getAttribute('data-event')]);
+            });
+
+            console.log(element_index);
         }
         else {
             element.className = "time-slot selected";
-            selection.push(day);
+            this.selection.push([element.parentNode.getAttribute('data-date'),element.getAttribute('data-event')]);
         }
-        console.log(selection);
+
+        console.log(this.selection);
     }
 
     // A function to create html elements
