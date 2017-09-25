@@ -123,7 +123,6 @@
         var self = this;
 
         var selected_slots = localStorage.getItem('availablities');
-        console.log(this.selection);
         var today_time_slot = this.time_slots.find(function(element) {
             return element.weekday == day.day();
         });
@@ -131,9 +130,13 @@
         if(today_time_slot) {
             today_time_slot.slots.forEach(function(ts) {
                 var ts_span = createElement('div', 'time-slot', ts, 'data-event', ts);
-                if(selected_slots.indexOf(JSON.stringify([day.format(), ts])) != -1 ){
-                    ts_span.className = "time-slot selected";
+
+                if(selected_slots){
+                    if(selected_slots.indexOf(JSON.stringify([day.format(), ts])) != -1 ){
+                        ts_span.className = "time-slot selected";
+                    }
                 }
+
                 element.appendChild(ts_span);
 
                 ts_span.addEventListener('click', function () {
