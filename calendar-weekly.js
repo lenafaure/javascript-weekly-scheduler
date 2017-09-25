@@ -151,19 +151,20 @@
     }
 
     Calendar.prototype.select_time_slot = function(element) {
+        var element_data = [element.parentNode.getAttribute('data-date'),element.getAttribute('data-event')];
 
         if(element.className.includes('selected')) {
             element.className = "time-slot";
 
             var element_index = this.selection.findIndex(function(item){
-               return JSON.stringify(item) == JSON.stringify([element.parentNode.getAttribute('data-date'),element.getAttribute('data-event')]);
+               return JSON.stringify(item) == JSON.stringify(element_data);
             });
 
-            console.log(element_index);
+            this.selection.splice(element_index, 1);
         }
         else {
             element.className = "time-slot selected";
-            this.selection.push([element.parentNode.getAttribute('data-date'),element.getAttribute('data-event')]);
+            this.selection.push(element_data);
         }
 
         console.log(this.selection);
