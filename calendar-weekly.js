@@ -10,9 +10,10 @@
         this.el = document.querySelector(selector);
         this.time_slots = time_slots;
         this.current = moment().startOf('week');
-        this.selection = [];
+        this.selection = JSON.parse(localStorage.getItem('availablities')) || [];
         this.draw_calendar();
     }
+
 
     Calendar.prototype.draw_calendar = function() {
         // Draw Header
@@ -99,11 +100,12 @@
     Calendar.prototype.draw_day = function(day) {
 
         if (!this.get_day_class(day).includes('other')) {
+
             var day_wrapper = createElement('div', this.get_day_class(day));
             var day_name = createElement('div', 'day-name', day.locale('fr').format('ddd'));
             var day_number = createElement('div', 'day-number', day.format('DD'));
             var day_month = createElement('div', 'day-month', day.locale('fr').format('MMM'));
-            var day_slot = createElement('div', 'day-slot', '', 'data-date', day);
+            var day_slot = createElement('div', 'day-slot', '', 'data-date', day.format());
 
             if(day.day() <= 5) {
                 this.draw_time_slot(day, day_slot);
@@ -120,14 +122,18 @@
     Calendar.prototype.draw_time_slot = function(day, element) {
         var self = this;
 
+        var selected_slots = localStorage.getItem('availablities');
+        console.log(this.selection);
         var today_time_slot = this.time_slots.find(function(element) {
             return element.weekday == day.day();
         });
 
-        console.log(today_time_slot);
         if(today_time_slot) {
             today_time_slot.slots.forEach(function(ts) {
                 var ts_span = createElement('div', 'time-slot', ts, 'data-event', ts);
+                if(selected_slots.indexOf(JSON.stringify([day.format(), ts])) != -1 ){
+                    ts_span.className = "time-slot selected";
+                }
                 element.appendChild(ts_span);
 
                 ts_span.addEventListener('click', function () {
@@ -156,6 +162,7 @@
         if(element.className.includes('selected')) {
             element.className = "time-slot";
 
+            // Find and remove element in selections array
             var element_index = this.selection.findIndex(function(item){
                return JSON.stringify(item) == JSON.stringify(element_data);
             });
@@ -167,7 +174,7 @@
             this.selection.push(element_data);
         }
 
-        console.log(this.selection);
+        localStorage.setItem('availablities', JSON.stringify(this.selection));
     }
 
     // A function to create html elements
@@ -234,5 +241,7 @@
     ];
 
     var calendar = new Calendar('#calendar', time_slots);
+    console.log(calendar);
+
 
 }();
